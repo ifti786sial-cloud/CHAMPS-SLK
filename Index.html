@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CHAMPS (CMH SIALKOT) - Patient Management System</title>
+    <style>
+        /* Modern & Elegant Styling */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Dynamic & Vibrant Background - Inspired by Pakistani Truck Art & Landscapes */
+            background: linear-gradient(135deg, #FF6F61, #FFD700, #4CAF50, #00BCD4, #9C27B0); /* Coral, Gold, Green, Cyan, Purple */
+            background-size: 400% 400%;
+            animation: gradientAnimation 20s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.5s ease;
+            font-size: 14px; /* Base font size for HTML - reduced */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.98);
+            max-width: 1000px; /* Increased width */
+            margin: 30px auto;
+            padding: 40px 50px; /* Increased padding */
+            border-radius: 25px; /* More rounded corners */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+            border: 1px solid #e0e0e0;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1; /* Ensure container is above background animation */
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 4px solid #0056b3; /* Stronger blue line */
+            position: relative; /* For the subtle design elements */
+        }
+        .header-section::before,
+        .header-section::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #007bff; /* Accent color */
+            opacity: 0.1;
+            z-index: -1;
+            animation: pulse 2s infinite alternate;
+        }
+        .header-section::before {
+            top: 0;
+            left: 20px;
+        }
+        .header-section::after {
+            bottom: 0;
+            right: 20px;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(0.9); opacity: 0.1; }
+            to { transform: scale(1.1); opacity: 0.2; }
+        }
+
+        .header-section h1 {
+            color: #0056b3;
+            margin: 0;
+            font-size: 3em; /* Larger font size */
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+            letter-spacing: 1.5px; /* Spacing between letters */
+        }
+
+        .form-title {
+            text-align: center;
+            color: #28a745;
+            margin-bottom: 30px;
+            font-size: 2em;
+            font-weight: 600;
+            border-bottom: 3px dashed #d4edda;
+            padding-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1.0em; /* Reduced */
+            transition: color 0.3s ease;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px; /* Reduced padding */
+            margin-top: 8px;
+            border: 2px solid #c0c0c0; /* Slightly thicker border */
+            border-radius: 12px; /* More rounded */
+            box-sizing: border-box;
+            font-size: 1em; /* Reduced font size */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fcfcfc;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.4); /* More vibrant focus shadow */
+            outline: none;
+            background-color: #fff;
+        }
+        button {
+            margin-top: 30px;
+            padding: 14px 28px; /* Reduced padding */
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.05em; /* Reduced font size */
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-right: 20px; /* More space between buttons */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18); /* Stronger button shadow */
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            transform: translateY(-5px); /* More pronounced lift on hover */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 35px 0;
+            border-top: 1px solid #eee;
+            margin-top: 35px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #ccc;
+            background-color: #f5f5f5;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+        }
+        .tab-button {
+            background-color: #fafafa;
+            color: #6c757d;
+            border: none;
+            padding: 18px 35px; /* More padding */
+            cursor: pointer;
+            border-radius: 0;
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            flex-grow: 1;
+            text-align: center;
+            position: relative;
+            font-size: 1.05em;
+        }
+        .tab-button:hover:not(.active) {
+            background-color: #e9ecef;
+            color: #343a40;
+            transform: translateY(-2px);
+        }
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.25);
+            z-index: 1;
+            transform: translateY(-3px);
+        }
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px; /* Thicker active line */
+            background-color: #28a745;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nominal-roll-container, .attendance-records, .progress-reports, .print-preview-container, .print-details-container {
+            margin-top: 30px;
+            border: 1px solid #ddd;
+            padding: 25px;
+            border-radius: 15px;
+            background-color: #fff;
+            max-height: 550px; /* Slightly taller */
+            overflow-y: auto;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.06); /* Deeper inner shadow */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        th, td {
+            border: 1px solid #e9ecef;
+            padding: 16px; /* More padding */
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.98em;
+        }
+        th {
+            background-color: #eef7ff;
+            color: #0056b3;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background-color: #fcfdff;
+        }
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+        .search-container {
+            display: flex;
+            margin-bottom: 30px;
+            gap: 15px; /* More spacing */
+        }
+        .search-container input {
+            flex-grow: 1;
+            padding: 14px;
+            border-radius: 12px;
+        }
+        .patient-summary {
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Stronger shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .patient-summary:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+        .patient-summary h3 {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 1.5em;
+            border-bottom: 2px solid #e0f0ff;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .patient-summary p {
+            margin: 10px 0;
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #444;
+        }
+        .patient-summary .actions button {
+            margin-top: 18px;
+            padding: 12px 25px;
+            font-size: 1em;
+        }
+        #attendanceList, #progressList, #printReportContent ul, #printDetailsContent ul {
+            list-style: none;
+            padding: 0;
+        }
+        #attendanceList li, #progressList li, #printReportContent li, #printDetailsContent li {
+            background-color: #f8faff;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e0f0ff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+        #attendanceList li:hover, #progressList li:hover {
+            transform: translateX(10px);
+        }
+        #attendanceList li span, #progressList li span, #printDetailsContent li span {
+            flex-grow: 1;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+        #attendanceList li button, #progressList li button {
+            margin-left: 25px;
+            margin-top: 0;
+            padding: 10px 18px;
+            font-size: 0.95em;
+            box-shadow: none;
+        }
+
+        /* Backup Management System CSS (Refined) */
+        .backup-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            padding: 40px 50px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            margin-top: 50px;
+            border: 1px solid #e0e0e0;
+        }
+        .backup-container h2.form-title {
+            border-bottom: 4px solid #28a745;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            font-size: 2.2em;
+            color: #0056b3;
+        }
+        .backup-section {
+            margin-bottom: 45px;
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid #cceeff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        .backup-section h3 {
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            border-bottom: 3px dashed #b3d9ff;
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+        .backup-local { background-color: #e8f5e9; border-color: #d4edda; }
+        .backup-auto { background-color: #f3e5f5; border-color: #eeddff; }
+        .backup-restore { background-color: #fff3e0; border-color: #ffe0b2; }
+        .status-box {
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: 600;
+            border: 1px solid;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            font-size: 1.05em;
+        }
+        .status-success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .status-warning { background-color: #fff3cd; color: #856404; border-color: #ffeeba; }
+        .status-danger { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: #444;
+            font-size: 1.15em;
+        }
+        .sync-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #dc3545;
+            border: 2px solid rgba(0,0,0,0.1);
+            box-shadow: 0 0 8px rgba(0,0,0,0.25);
+            transition: background-color 0.3s ease;
+        }
+        .sync-indicator.connected {
+            background-color: #28a745;
+        }
+        /* Watermark CSS removed */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Larger stat cards */
+            gap: 35px;
+            margin: 35px 0;
+        }
+        .stat-card {
+            background-color: #fdfefe;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #e9f5ff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        .stat-number {
+            font-size: 3.5em; /* Larger number */
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 12px;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 1.25em; /* Larger label */
+            font-weight: 600;
+        }
+        /* Print Form specific styles */
+        .print-details-container {
+            max-height: none; /* Allow full height for print preview */
+            overflow-y: visible;
+        }
+
+        .print-patient-details-section {
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .print-patient-details-section p {
+            margin: 8px 0;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .print-patient-details-section strong {
+            display: inline-block;
+            width: 150px; /* Adjust as needed for alignment */
+            color: #333;
+        }
+
+        /* Print Specific Styles */
+        @media print {
+            body {
+                background: none !important;
+                color: #000 !important;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-family: Arial, sans-serif !important; /* Set font to Arial */
+                font-size: 16px !important; /* Increased base font for print */
+            }
+            .container {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+            .header-section {
+                display: block !important;
+                text-align: center !important;
+                margin-bottom: 20px !important; /* Reduced margin */
+                padding-bottom: 12px !important; /* Reduced padding */
+                border-bottom: 3px solid #000 !important; /* Thinner border for print */
+            }
+            .header-section::before, .header-section::after {
+                display: none !important; /* Hide decorative elements on print */
+            }
+            .header-section h1 {
+                font-size: 2em !important; /* Reduced font size for print */
+                color: #000 !important;
+                text-shadow: none !important;
+                margin-bottom: 10px !important;
+            }
+            .tab-buttons, .form-title, .search-container, button, .status-box, .sync-status, /* .watermark, (already removed from HTML) */ input[type="file"], .stats-grid, .backup-section, .patient-summary .actions, /* Hide other tab content when printing specific ones */
+            #progressPidAdd, #reportDate, #reportDetails, .progress-reports h3:first-of-type, #progressList,
+            #printForm #pidForPrint + button, #printForm h3, #statusFilterNominal, #statusFilterNominal + label { /* Hide search button and h3 in print form */
+                display: none !important;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin-top: 20px !important;
+            }
+            th, td {
+                border: 1px solid #000 !important;
+                padding: 8px !important; /* Reduced padding for more content */
+                font-size: 0.9em !important; /* Slightly smaller font */
+                color: #000 !important;
+            }
+            th {
+                background-color: #d0d0d0 !important;
+                -webkit-print-color-adjust: exact;
+                color: #000 !important;
+                font-weight: 700 !important;
+            }
+            tr:nth-child(even) {
+                background-color: #e8e8e8 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .nominal-roll-container, .progress-reports, .print-preview-container, .print-details-container {
+                max-height: none !important;
+                overflow-y: visible !important;
+                border: none !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                margin-top: 0 !important;
+            }
+            .patient-summary {
+                border: 1px solid #bbb !important;
+                padding: 15px !important; /* Reduced padding */
+                margin-bottom: 10px !important; /* Reduced margin */
+                box-shadow: none !important;
+            }
+            .patient-summary h3 {
+                font-size: 1.2em !important; /* Reduced font size */
+                border-bottom: 1px solid #aaa !important;
+                color: #000 !important;
+                padding-bottom: 8px !important;
+                margin-bottom: 10px !important;
+            }
+            .patient-summary p {
+                font-size: 0.9em !important; /* Reduced font size */
+                line-height: 1.4 !important;
+            }
+            h3 { /* For sub-headers within the report */
+                color: #000 !important;
+                margin-top: 20px !important;
+                margin-bottom: 10px !important;
+                font-size: 1.2em !important; /* Reduced font size */
+                border-bottom: 1px dashed #ccc !important;
+                padding-bottom: 5px !important;
+            }
+            ul { list-style: none !important; padding: 0 !important; margin-top: 10px !important; }
+            li {
+                background-color: #f5f5f5 !important; /* Lighter background for list items */
+                padding: 10px !important; /* Reduced padding */
+                margin-bottom: 6px !important;
+                border-radius: 5px !important;
+                border: 1px solid #eee !important;
+                -webkit-print-color-adjust: exact;
+                box-shadow: none !important; /* No shadow on print */
+                font-size: 0.9em !important;
+            }
+            li strong { color: #333 !important; display: inline-block; width: 80px; } /* Adjust as needed */
+
+            /* Specific print styles for the dedicated print report section */
+            .print-patient-details p {
+                margin-bottom: 5px !important; /* Reduced margin for details */
+                font-size: 16px !important; /* Set font size to 16px */
+            }
+            .print-patient-details strong {
+                display: inline-block;
+                width: 120px; /* Adjusted width for labels */
+                font-weight: bold;
+                color: #333;
+            }
+            .print-progress-reports {
+                margin-top: 15px !important; /* Reduced margin */
+            }
+            .print-progress-reports li {
+                line-height: 1.5;
+                padding: 10px !important;
+                font-size: 16px !important; /* Set font size to 16px */
+            }
+
+            /* Print Form Output Specific Styles */
+            .printable-patient-details {
+                margin-top: 20px !important;
+                padding: 15px !important;
+                border: 1px solid #000 !important;
+                border-radius: 8px !important;
+                background-color: #fff !important;
+                box-shadow: none !important;
+                font-size: 16px !important; /* Set font size to 16px */
+            }
+            .printable-patient-details p {
+                margin: 5px 0 !important;
+                font-size: 16px !important; /* Set font size to 16px */
+            }
+            .printable-patient-details strong {
+                display: inline-block;
+                width: 120px; /* Align labels */
+                font-weight: bold;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1>CHAMPS (CMH SIALKOT)</h1>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab(event, 'intakeForm')">Patient Intake</button>
+            <button class="tab-button" onclick="openTab(event, 'attendance')">Attendance</button>
+            <button class="tab-button" onclick="openTab(event, 'progressReport')">Progress Report</button>
+            <button class="tab-button" onclick="openTab(event, 'nominalRoll')">Nominal Roll</button>
+            <button class="tab-button" onclick="openTab(event, 'printForm')">🖨️ Print Form</button>
+            <button class="tab-button" onclick="openTab(event, 'backupManagement')">Backup Management</button>
+        </div>
+
+        <div id="intakeForm" class="tab-content active">
+            <h2 class="form-title">PATIENT INTAKE FORM</h2>
+            <form id="patientForm">
+                <label for="pid">PATIENT ID:</label>
+                <input type="text" id="pid" readonly>
+                <button type="button" class="btn-primary" onclick="generatePID()">GENERATE ID</button>
+
+                <label for="pname">PATIENT NAME:</label>
+                <input type="text" id="pname" required>
+
+                <label for="rank">RANK:</label>
+                <input type="text" id="rank">
+
+                <label for="fname">FATHER NAME:</label>
+                <input type="text" id="fname" required>
+
+                <label for="age">AGE:</label>
+                <input type="number" id="age">
+
+                <label for="gender">GENDER:</label>
+                <select id="gender">
+                    <option value="">SELECT</option>
+                    <option value="Male">MALE</option>
+                    <option value="Female">FEMALE</option>
+                    <option value="Other">OTHER</option>
+                </select>
+
+                <label for="referred">REFERRED BY:</label>
+                <input type="text" id="referred">
+
+                <label for="intervention">INTERVENTION:</label>
+                <input type="text" id="intervention">
+
+                <label for="clinician">CLINICIAN:</label>
+                <input type="text" id="clinician">
+
+                <label for="disorder">DISORDER:</label>
+                <textarea id="disorder" rows="3"></textarea>
+
+                <label for="admit">ADMISSION DATE:</label>
+                <input type="date" id="admit">
+
+                <label for="address">ADDRESS:</label>
+                <textarea id="address" rows="3"></textarea>
+
+                <label for="contact">CONTACT NUMBER:</label>
+                <input type="text" id="contact">
+
+                <label for="status">STATUS:</label>
+                <select id="status">
+                    <option value="Active">ACTIVE</option>
+                    <option value="Inactive">INACTIVE</option>
+                </select>
+
+                <button type="button" class="btn-success" onclick="saveIntake()">SAVE PATIENT</button>
+                <button type="button" class="btn-primary" onclick="clearForm()">CLEAR FORM</button>
+            </form>
+        </div>
+
+        <div id="attendance" class="tab-content">
+            <h2 class="form-title">PATIENT ATTENDANCE</h2>
+            <label for="attendancePid">PATIENT ID:</label>
+            <input type="text" id="attendancePid" oninput="loadAttendance()">
+            <label for="sessionDate">SESSION DATE:</label>
+            <input type="date" id="sessionDate">
+            <label for="sessionsCount">NUMBER OF SESSIONS:</label>
+            <input type="number" id="sessionsCount" min="1" value="1">
+            <button class="btn-success" onclick="saveAttendance()">SAVE ATTENDANCE</button>
+
+            <h3>ATTENDANCE RECORDS:</h3>
+            <div class="attendance-records">
+                <ul id="attendanceList">
+                    <li>NO ATTENDANCE RECORDS FOR THIS PATIENT.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="progressReport" class="tab-content">
+            <h2 class="form-title">PATIENT PROGRESS REPORT</h2>
+            <label for="progressPidAdd">PATIENT ID (TO ADD PROGRESS):</label>
+            <input type="text" id="progressPidAdd" placeholder="ENTER PATIENT ID (E.G., P000001)">
+            <label for="reportDate">REPORT DATE:</label>
+            <input type="date" id="reportDate">
+            <label for="reportDetails">REPORT DETAILS:</label>
+            <textarea id="reportDetails" rows="5"></textarea>
+            <button class="btn-success" onclick="saveProgressReport()">SAVE PROGRESS REPORT</button>
+
+            <h3>PREVIOUS PROGRESS REPORTS (FOR ADDED ID):</h3>
+            <div class="progress-reports">
+                <ul id="progressList">
+                    <li>NO PROGRESS REPORTS FOR THIS PATIENT.</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 40px;">FULL PROGRESS REPORT PREVIEW FOR PRINTING:</h3>
+            <label for="progressPidSearch">PATIENT ID (TO LOAD/PRINT):</label>
+            <input type="text" id="progressPidSearch" placeholder="ENTER PATIENT ID (E.G., P000001)" oninput="loadProgressReportPreview(this.value)">
+            <button class="btn-success" onclick="loadProgressReportPreview()">LOAD REPORT</button>
+            <button class="btn-primary" id="printReportButton" style="display: none;" onclick="printSpecificReportContent()">🖨️ PRINT THIS REPORT</button>
+
+            <div class="print-preview-container">
+                <div id="printReportContent">
+                    <p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK 'LOAD REPORT' TO SEE PREVIEW.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="nominalRoll" class="tab-content">
+            <h2 class="form-title">PATIENT NOMINAL ROLL</h2>
+            <div class="search-container">
+                <input type="text" id="searchNominal" placeholder="SEARCH BY ID OR NAME" onkeyup="generateNominalRoll()">
+                <label for="statusFilterNominal" style="margin-top: 0; margin-bottom: 0;">STATUS:</label>
+                <select id="statusFilterNominal" onchange="generateNominalRoll()" style="width: auto; margin-top: 0;">
+                    <option value="All">ALL</option>
+                    <option value="Active">ACTIVE</option>
+                    <option value="Inactive">INACTIVE</option>
+                </select>
+            </div>
+            <div class="nominal-roll-container">
+                <div id="patientList">
+                    <p>NO PATIENTS FOUND. PLEASE ADD PATIENTS USING THE PATIENT INTAKE FORM.</p>
+                </div>
+            </div>
+            <button class="btn-success" onclick="printNominalRoll()">PRINT NOMINAL ROLL</button>
+            <button class="btn-primary" onclick="exportToExcel('nominalRollTable', 'CHAMPS_Nominal_Roll')">EXPORT NOMINAL ROLL TO EXCEL</button>
+        </div>
+
+        <div id="printForm" class="tab-content">
+            <h2 class="form-title">🖨️ PRINT PATIENT DETAILS</h2>
+            <label for="pidForPrint">PATIENT ID:</label>
+            <input type="text" id="pidForPrint" placeholder="ENTER PATIENT ID (E.G., P000001)">
+            <button class="btn-success" onclick="loadPatientDetailsForPrint()">LOAD DETAILS</button>
+            <button class="btn-primary" id="printDetailsButton" style="display: none;" onclick="printPatientDetails()">🖨️ PRINT DETAILS</button>
+
+            <h3 style="margin-top: 40px;">PATIENT DETAILS FOR PRINTING:</h3>
+            <div class="print-details-container">
+                <div id="printDetailsContent">
+                    <p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK 'LOAD DETAILS' TO SEE PREVIEW.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="backupManagement" class="tab-content">
+            <h2 class="form-title">🔒 CHAMPS BACKUP MANAGEMENT SYSTEM</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalPatients">0</div>
+                    <div class="stat-label">TOTAL PATIENTS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activePatientsCount">0</div>
+                    <div class="stat-label">ACTIVE PATIENTS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="inactivePatientsCount">0</div>
+                    <div class="stat-label">INACTIVE PATIENTS</div>
+                </div>
+            </div>
+
+            <div class="backup-section backup-local">
+                <h3>💾 LOCAL STORAGE MANAGEMENT</h3>
+                <div class="sync-status">
+                    <div class="sync-indicator" id="localSyncIndicator"></div>
+                    <span id="localSyncStatus">CHECKING LOCAL STORAGE...</span>
+                </div>
+                <button class="btn-primary" onclick="saveToLocalStorage()">💾 SAVE CURRENT DATA</button>
+                <button class="btn-success" onclick="loadFromLocalStorage()">📥 LOAD FROM LOCAL STORAGE</button>
+                <button class="btn-warning" onclick="clearLocalStorage()">🗑️ CLEAR LOCAL STORAGE</button>
+                <div id="localStorageStatus" class="status-box status-success" style="display: none;"> LOCAL STORAGE IS WORKING PROPERLY </div>
+            </div>
+
+            <div class="backup-section backup-auto">
+                <h3>🔄 AUTO BACKUP SETTINGS</h3>
+                <div class="sync-status">
+                    <div class="sync-indicator" id="autoSyncIndicator"></div>
+                    <span id="autoSyncStatus">AUTO BACKUP IS DISABLED</span>
+                </div>
+                <button class="btn-primary" onclick="toggleAutoBackup()" id="autoBackupBtn">ENABLE AUTO BACKUP</button>
+                <div style="margin: 10px 0;">
+                    <label>
+                        <input type="checkbox" id="autoLocal" checked> AUTO SAVE TO LOCAL STORAGE
+                    </label>
+                </div>
+                <p><small>WHEN ENABLED, DATA WILL BE AUTOMATICALLY BACKED UP EVERY TIME YOU MAKE CHANGES TO PATIENT DATA</small></p>
+            </div>
+
+            <div class="backup-section backup-restore">
+                <h3>📁 FILE BACKUP & RESTORE</h3>
+                <div>
+                    <h4>DOWNLOAD BACKUP FILES:</h4>
+                    <button class="btn-success" onclick="downloadJSONBackup()">📄 DOWNLOAD JSON BACKUP</button>
+                    <button class="btn-success" onclick="exportAllPatientsToCSV()">📊 DOWNLOAD EXCEL (CSV) BACKUP</button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h4>RESTORE FROM FILE:</h4>
+                    <input type="file" id="restoreFile" accept=".json" />
+                    <button class="btn-warning" onclick="restoreFromFile()">📤 RESTORE FROM FILE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+        // Global variables for main system
+        let patients = {}; // All patient data will be stored here
+        let currentPatientId = null; // For attendance and progress forms
+        let nextPatientIdNum = 1; // For generating P00000X IDs
+
+        // Global variables for backup system
+        let autoBackupEnabled = false;
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadFromLocalStorage(); // Attempt to load data on page load
+            updateStatistics();
+            initializeNextPatientId(); // Initialize the next P-ID counter
+            openTab({currentTarget: document.querySelector('.tab-buttons .tab-button')}, 'intakeForm'); // Set default tab
+        });
+
+        // --- Main System Functions ---
+
+        // Tab Switching Logic
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Specific actions when switching tabs
+            if (tabName === 'nominalRoll') {
+                generateNominalRoll();
+            } else if (tabName === 'backupManagement') {
+                updateStatistics(); // Refresh backup stats when backup tab is opened
+            } else if (tabName === 'progressReport') {
+                // Initialize print report content when tab is opened
+                document.getElementById('printReportContent').innerHTML = '<p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK \'LOAD REPORT\' TO SEE PREVIEW.</p>';
+                document.getElementById('progressPidSearch').value = ''; // Clear ID field for search/print
+                document.getElementById('progressPidAdd').value = ''; // Clear ID field for adding progress
+                document.getElementById('printReportButton').style.display = 'none'; // Hide print button initially
+                loadProgressReportsList(''); // Load existing progress reports for the initial empty field for add
+            } else if (tabName === 'printForm') {
+                document.getElementById('printDetailsContent').innerHTML = '<p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK \'LOAD DETAILS\' TO SEE PREVIEW.</p>';
+                document.getElementById('pidForPrint').value = '';
+                document.getElementById('printDetailsButton').style.display = 'none';
+            }
+        }
+
+        // Initialize next patient ID number from existing patients
+        function initializeNextPatientId() {
+            let maxNum = 0;
+            for (const pid in patients) {
+                // Only consider P000000 format IDs for next ID generation
+                if (pid.startsWith('P') && pid.length === 7 && !isNaN(parseInt(pid.substring(1), 10))) {
+                    const num = parseInt(pid.substring(1), 10);
+                    if (num > maxNum) {
+                        maxNum = num;
+                    }
+                }
+            }
+            nextPatientIdNum = maxNum + 1;
+        }
+
+        // Generate Unique Patient ID (P000000 format)
+        function generatePID() {
+            const formattedNum = String(nextPatientIdNum).padStart(6, '0');
+            document.getElementById('pid').value = `P${formattedNum}`; // Do NOT increment nextPatientIdNum here, only after successful save
+        }
+
+        // Save Patient Intake Data
+        function saveIntake() {
+            const pid = document.getElementById('pid').value;
+            if (!pid) {
+                alert("PLEASE GENERATE A PATIENT ID BY CLICKING 'GENERATE ID'.");
+                return;
+            }
+
+            // Validate the P-ID format
+            if (!pid.startsWith('P') || pid.length !== 7 || isNaN(parseInt(pid.substring(1), 10))) {
+                alert("INVALID PATIENT ID FORMAT. PLEASE USE 'GENERATE ID' OR ENSURE IT'S LIKE P000001.");
+                return;
+            }
+
+            const pname = document.getElementById('pname').value;
+            const rank = document.getElementById('rank').value;
+            const fname = document.getElementById('fname').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const referred = document.getElementById('referred').value;
+            const intervention = document.getElementById('intervention').value;
+            const clinician = document.getElementById('clinician').value;
+            const disorder = document.getElementById('disorder').value;
+            const admit = document.getElementById('admit').value;
+            const address = document.getElementById('address').value;
+            const contact = document.getElementById('contact').value;
+            const status = document.getElementById('status').value; // Get the new status field
+
+            // Basic validation
+            if (!pname || !fname || !age || !gender || !admit || !status) {
+                alert("PLEASE FILL IN ALL REQUIRED FIELDS: PATIENT NAME, FATHER NAME, AGE, GENDER, ADMISSION DATE, AND STATUS.");
+                return;
+            }
+
+            // Check if patient already exists (for updating)
+            if (patients[pid]) {
+                if (!confirm(`PATIENT ID ${pid} ALREADY EXISTS. DO YOU WANT TO UPDATE THEIR DETAILS?`)) {
+                    return;
+                }
+            } else {
+                // Only increment nextPatientIdNum if a new patient is successfully added AND PID is the auto-generated one
+                const currentPidNum = parseInt(pid.substring(1), 10);
+                if (pid === `P${String(nextPatientIdNum).padStart(6, '0')}`) { // Check if it's the current auto-generated ID
+                    nextPatientIdNum++;
+                } else if (currentPidNum >= nextPatientIdNum) { // If a higher manual PID was used
+                    nextPatientIdNum = currentPidNum + 1;
+                }
+            }
+
+            patients[pid] = {
+                pid,
+                pname,
+                rank,
+                fname,
+                age,
+                gender,
+                referred,
+                intervention,
+                clinician,
+                disorder,
+                admit,
+                address,
+                contact,
+                status, // Save the new status field
+                attendance: patients[pid] ? patients[pid].attendance : [],
+                progress: patients[pid] ? patients[pid].progress : []
+            };
+
+            alert(`PATIENT ${pname} (ID: ${pid}) SAVED SUCCESSFULLY!`);
+            clearForm();
+            updateStatistics();
+            // Trigger auto-backup after data change
+            handleDataChange();
+        }
+
+        // Clear Patient Intake Form
+        function clearForm() {
+            document.getElementById('pid').value = '';
+            document.getElementById('pname').value = '';
+            document.getElementById('rank').value = '';
+            document.getElementById('fname').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('gender').value = '';
+            document.getElementById('referred').value = '';
+            document.getElementById('intervention').value = '';
+            document.getElementById('clinician').value = '';
+            document.getElementById('disorder').value = '';
+            document.getElementById('admit').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('contact').value = '';
+            document.getElementById('status').value = 'Active'; // Reset status to default
+
+            currentPatientId = null;
+            document.getElementById('attendancePid').value = '';
+            document.getElementById('progressPidAdd').value = ''; // Cleared for adding
+            document.getElementById('progressPidSearch').value = ''; // Cleared for searching/printing
+            document.getElementById('sessionDate').value = '';
+            document.getElementById('sessionsCount').value = '1';
+            document.getElementById('reportDate').value = '';
+            document.getElementById('reportDetails').value = '';
+            document.getElementById('attendanceList').innerHTML = '<li>NO ATTENDANCE RECORDS FOR THIS PATIENT.</li>';
+            document.getElementById('progressList').innerHTML = '<li>NO PROGRESS REPORTS FOR THIS PATIENT.</li>';
+            document.getElementById('printReportContent').innerHTML = '<p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK \'LOAD REPORT\' TO SEE PREVIEW.</p>';
+            document.getElementById('printReportButton').style.display = 'none';
+            document.getElementById('pidForPrint').value = '';
+            document.getElementById('printDetailsContent').innerHTML = '<p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK \'LOAD DETAILS\' TO SEE PREVIEW.</p>';
+            document.getElementById('printDetailsButton').style.display = 'none';
+        }
+
+        // Edit Patient (Load data into form for editing)
+        function editPatient(pid) {
+            const patient = patients[pid];
+            if (patient) {
+                document.getElementById('pid').value = patient.pid;
+                document.getElementById('pname').value = patient.pname;
+                document.getElementById('rank').value = patient.rank;
+                document.getElementById('fname').value = patient.fname;
+                document.getElementById('age').value = patient.age;
+                document.getElementById('gender').value = patient.gender;
+                document.getElementById('referred').value = patient.referred;
+                document.getElementById('intervention').value = patient.intervention;
+                document.getElementById('clinician').value = patient.clinician;
+                document.getElementById('disorder').value = patient.disorder;
+                document.getElementById('admit').value = patient.admit;
+                document.getElementById('address').value = patient.address;
+                document.getElementById('contact').value = patient.contact;
+                document.getElementById('status').value = patient.status || 'Active'; // Populate status, default to Active
+                openTab({currentTarget: document.querySelector('.tab-button:nth-child(1)')}, 'intakeForm'); // Switch to intake form
+            } else {
+                alert("PATIENT NOT FOUND.");
+            }
+        }
+
+        // Delete Patient
+        function deletePatient(pid) {
+            if (confirm(`ARE YOU SURE YOU WANT TO DELETE PATIENT ID: ${pid} AND ALL THEIR RECORDS? THIS ACTION CANNOT BE UNDONE.`)) {
+                delete patients[pid];
+                alert(`PATIENT ${pid} DELETED.`);
+                generateNominalRoll();
+                updateStatistics();
+                handleDataChange();
+            }
+        }
+
+        // Add Attendance
+        function saveAttendance() {
+            const pid = document.getElementById('attendancePid').value;
+            const sessionDate = document.getElementById('sessionDate').value;
+            const sessionsCount = parseInt(document.getElementById('sessionsCount').value);
+
+            if (!pid || !sessionDate || isNaN(sessionsCount) || sessionsCount <= 0) {
+                alert("PLEASE ENTER PATIENT ID, SESSION DATE, AND NUMBER OF SESSIONS.");
+                return;
+            }
+            if (!patients[pid]) {
+                alert("PATIENT ID NOT FOUND. PLEASE CHECK THE ID OR ADD THE PATIENT FIRST.");
+                return;
+            }
+
+            if (!patients[pid].attendance) {
+                patients[pid].attendance = [];
+            }
+            patients[pid].attendance.push({ date: sessionDate, count: sessionsCount });
+            alert(`ATTENDANCE SAVED for ${pid}.`);
+            document.getElementById('sessionDate').value = '';
+            document.getElementById('sessionsCount').value = '1';
+            loadAttendance();
+            handleDataChange();
+        }
+
+        // Load Attendance Records
+        function loadAttendance() {
+            const pid = document.getElementById('attendancePid').value;
+            const attendanceList = document.getElementById('attendanceList');
+            attendanceList.innerHTML = '';
+            currentPatientId = pid;
+
+            if (patients[pid] && patients[pid].attendance && patients[pid].attendance.length > 0) {
+                // Sort attendance records by date in descending order
+                const sortedAttendance = patients[pid].attendance.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                sortedAttendance.forEach((record, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>DATE: ${record.date} - SESSIONS: ${record.count}</span>
+                                    <button class="btn-danger" onclick="deleteAttendance('${pid}', ${index})">DELETE</button>`;
+                    attendanceList.appendChild(li);
+                });
+            } else {
+                attendanceList.innerHTML = '<li>NO ATTENDANCE RECORDS FOR THIS PATIENT.</li>';
+            }
+        }
+
+        // Delete Attendance Record
+        function deleteAttendance(pid, index) {
+            if (confirm("ARE YOU SURE YOU WANT TO DELETE THIS ATTENDANCE RECORD?")) {
+                if (patients[pid] && patients[pid].attendance) {
+                    patients[pid].attendance.splice(index, 1);
+                    loadAttendance(); // Reload the list after deletion
+                    handleDataChange();
+                }
+            }
+        }
+
+        // Save Progress Report
+        function saveProgressReport() {
+            const pid = document.getElementById('progressPidAdd').value;
+            const reportDate = document.getElementById('reportDate').value;
+            const reportDetails = document.getElementById('reportDetails').value;
+
+            if (!pid || !reportDate || !reportDetails) {
+                alert("PLEASE ENTER PATIENT ID, REPORT DATE, AND REPORT DETAILS.");
+                return;
+            }
+            if (!patients[pid]) {
+                alert("PATIENT ID NOT FOUND. PLEASE CHECK THE ID OR ADD THE PATIENT FIRST.");
+                return;
+            }
+
+            if (!patients[pid].progress) {
+                patients[pid].progress = [];
+            }
+            patients[pid].progress.push({ date: reportDate, details: reportDetails });
+            alert(`PROGRESS REPORT SAVED for ${pid}.`);
+            document.getElementById('reportDate').value = '';
+            document.getElementById('reportDetails').value = '';
+            loadProgressReportsList(pid); // Refresh the list of reports
+            handleDataChange();
+        }
+
+        // Load Progress Reports for Adding/Editing
+        function loadProgressReportsList(pid) {
+            const progressList = document.getElementById('progressList');
+            progressList.innerHTML = '';
+            if (patients[pid] && patients[pid].progress && patients[pid].progress.length > 0) {
+                // Sort progress reports by date in descending order
+                const sortedProgress = patients[pid].progress.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                sortedProgress.forEach((report, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>DATE: ${report.date}</span>
+                                    <span>DETAILS: ${report.details}</span>
+                                    <button class="btn-danger" onclick="deleteProgressReport('${pid}', ${index})">DELETE</button>`;
+                    progressList.appendChild(li);
+                });
+            } else {
+                progressList.innerHTML = '<li>NO PROGRESS REPORTS FOR THIS PATIENT.</li>';
+            }
+        }
+
+        // Delete Progress Report
+        function deleteProgressReport(pid, index) {
+            if (confirm("ARE YOU SURE YOU WANT TO DELETE THIS PROGRESS REPORT?")) {
+                if (patients[pid] && patients[pid].progress) {
+                    patients[pid].progress.splice(index, 1);
+                    loadProgressReportsList(pid); // Reload the list after deletion
+                    // If a report was loaded for print preview, clear it
+                    if (document.getElementById('progressPidSearch').value === pid) {
+                         loadProgressReportPreview(pid);
+                    }
+                    handleDataChange();
+                }
+            }
+        }
+
+
+        // Generate Nominal Roll Display
+        function generateNominalRoll() {
+            const patientListDiv = document.getElementById('patientList');
+            const searchTerm = document.getElementById('searchNominal').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilterNominal').value; // Get selected status filter
+
+            let html = '';
+            if (Object.keys(patients).length === 0) {
+                patientListDiv.innerHTML = '<p>NO PATIENTS FOUND. PLEASE ADD PATIENTS USING THE PATIENT INTAKE FORM.</p>';
+                return;
+            }
+
+            html += '<table id="nominalRollTable">';
+            html += '<thead><tr><th>ID</th><th>NAME</th><th>FATHER NAME</th><th>AGE</th><th>GENDER</th><th>CONTACT</th><th>STATUS</th><th>ACTIONS</th></tr></thead>';
+            html += '<tbody>';
+
+            let patientFound = false;
+            for (const pid in patients) {
+                const patient = patients[pid];
+                const matchesSearch = patient.pid.toLowerCase().includes(searchTerm) || patient.pname.toLowerCase().includes(searchTerm) || patient.fname.toLowerCase().includes(searchTerm);
+                const matchesStatus = (statusFilter === 'All' || patient.status === statusFilter);
+
+                if (matchesSearch && matchesStatus) {
+                    patientFound = true;
+                    html += `<tr>
+                                <td>${patient.pid}</td>
+                                <td>${patient.pname}</td>
+                                <td>${patient.fname}</td>
+                                <td>${patient.age}</td>
+                                <td>${patient.gender}</td>
+                                <td>${patient.contact}</td>
+                                <td>${patient.status || 'N/A'}</td> <td>
+                                    <button class="btn-primary" onclick="editPatient('${patient.pid}')">EDIT</button>
+                                    <button class="btn-danger" onclick="deletePatient('${patient.pid}')">DELETE</button>
+                                </td>
+                            </tr>`;
+                }
+            }
+            html += '</tbody></table>';
+
+            if (!patientFound) {
+                patientListDiv.innerHTML = '<p>NO PATIENTS FOUND MATCHING YOUR CRITERIA.</p>';
+            } else {
+                patientListDiv.innerHTML = html;
+            }
+        }
+
+
+        // Search Patient - now just calls generateNominalRoll to apply filters
+        function searchPatient() {
+            generateNominalRoll();
+        }
+
+        // Print Nominal Roll
+        function printNominalRoll() {
+            const nominalRollContent = document.getElementById('patientList').innerHTML;
+            const originalBody = document.body.innerHTML;
+            document.body.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h1>CHAMPS (CMH SIALKOT) - NOMINAL ROLL</h1>
+                </div>
+                ${nominalRollContent}
+            `;
+            window.print();
+            document.body.innerHTML = originalBody;
+            // Restore event listeners for tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.onclick = (e) => openTab(e, button.id.replace('TabButton', ''));
+            });
+            // Ensure the nominal roll tab is active again after print
+            openTab({currentTarget: document.querySelector('.tab-button:nth-child(4)')}, 'nominalRoll');
+        }
+
+        // Export Nominal Roll to Excel (CSV)
+        function exportToExcel(tableID, filename = '') {
+            var tab_text = `<html xmlns:x="urn:schemas-microsoft-com:office:excel">
+            <head>
+                <meta charset="UTF-8">
+            </head>
+            <body>
+                <table>${document.getElementById(tableID).innerHTML}</table>
+            </body>
+            </html>`;
+
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                // If Internet Explorer
+                txtArea1.document.open("txt/html", "replace");
+                txtArea1.document.write(tab_text);
+                txtArea1.document.close();
+                txtArea1.focus();
+                sa = txtArea1.document.execCommand("SaveAs", true, filename + ".xls");
+            } else {
+                // Other browsers
+                var link = document.createElement('a');
+                link.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(tab_text);
+                link.download = filename ? filename + '.xls' : 'excel_data.xls';
+                link.click();
+            }
+        }
+
+
+        // Load Progress Report Preview for printing
+        function loadProgressReportPreview(pidFromInput) {
+            const pid = pidFromInput || document.getElementById('progressPidSearch').value;
+            const printReportContentDiv = document.getElementById('printReportContent');
+            const printButton = document.getElementById('printReportButton');
+
+            printReportContentDiv.innerHTML = ''; // Clear previous content
+            printButton.style.display = 'none'; // Hide print button by default
+
+            if (!pid) {
+                printReportContentDiv.innerHTML = '<p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK \'LOAD REPORT\' TO SEE PREVIEW.</p>';
+                return;
+            }
+
+            const patient = patients[pid];
+            if (!patient) {
+                printReportContentDiv.innerHTML = '<p style="text-align: center; color: #dc3545; font-weight: bold;">PATIENT NOT FOUND.</p>';
+                return;
+            }
+
+            let html = `<div class="printable-patient-details">
+                            <p><strong>PATIENT ID:</strong> ${patient.pid}</p>
+                            <p><strong>NAME:</strong> ${patient.pname}</p>
+                            <p><strong>FATHER NAME:</strong> ${patient.fname}</p>
+                            <p><strong>AGE:</strong> ${patient.age}</p>
+                            <p><strong>GENDER:</strong> ${patient.gender}</p>
+                            <p><strong>ADMISSION DATE:</strong> ${patient.admit}</p>
+                            <p><strong>STATUS:</strong> ${patient.status || 'N/A'}</p>
+                            <p><strong>REFERRED BY:</strong> ${patient.referred}</p>
+                            <p><strong>INTERVENTION:</strong> ${patient.intervention}</p>
+                            <p><strong>CLINICIAN:</strong> ${patient.clinician}</p>
+                            <p><strong>DISORDER:</strong> ${patient.disorder}</p>
+                            <p><strong>CONTACT:</strong> ${patient.contact}</p>
+                            <p><strong>ADDRESS:</strong> ${patient.address}</p>
+                        </div>
+                        <h3>PROGRESS REPORTS:</h3>
+                        <ul class="print-progress-reports">`;
+
+            if (patient.progress && patient.progress.length > 0) {
+                const sortedProgress = patient.progress.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by date ascending for report
+                sortedProgress.forEach(report => {
+                    html += `<li><strong>DATE:</strong> ${report.date}<br><strong>DETAILS:</strong> ${report.details}</li>`;
+                });
+            } else {
+                html += '<li>NO PROGRESS REPORTS AVAILABLE.</li>';
+            }
+            html += `</ul>`;
+
+            printReportContentDiv.innerHTML = html;
+            printButton.style.display = 'inline-block'; // Show print button
+        }
+
+        // Print Specific Progress Report
+        function printSpecificReportContent() {
+            const contentToPrint = document.getElementById('printReportContent').innerHTML;
+            const originalBody = document.body.innerHTML;
+            document.body.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h1>CHAMPS (CMH SIALKOT) - PATIENT PROGRESS REPORT</h1>
+                </div>
+                ${contentToPrint}
+            `;
+            window.print();
+            document.body.innerHTML = originalBody;
+            // Restore event listeners for tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.onclick = (e) => openTab(e, button.id.replace('TabButton', ''));
+            });
+            // Ensure the progress report tab is active again after print
+            openTab({currentTarget: document.querySelector('.tab-button:nth-child(3)')}, 'progressReport');
+        }
+
+        // Load Patient Details for Print Form
+        function loadPatientDetailsForPrint() {
+            const pid = document.getElementById('pidForPrint').value;
+            const printDetailsContentDiv = document.getElementById('printDetailsContent');
+            const printButton = document.getElementById('printDetailsButton');
+
+            printDetailsContentDiv.innerHTML = ''; // Clear previous content
+            printButton.style.display = 'none'; // Hide print button by default
+
+            if (!pid) {
+                printDetailsContentDiv.innerHTML = '<p style="text-align: center; color: #777;">ENTER PATIENT ID AND CLICK \'LOAD DETAILS\' TO SEE PREVIEW.</p>';
+                return;
+            }
+
+            const patient = patients[pid];
+            if (!patient) {
+                printDetailsContentDiv.innerHTML = '<p style="text-align: center; color: #dc3545; font-weight: bold;">PATIENT NOT FOUND.</p>';
+                return;
+            }
+
+            let html = `<div class="printable-patient-details">
+                            <p><strong>PATIENT ID:</strong> ${patient.pid}</p>
+                            <p><strong>NAME:</strong> ${patient.pname}</p>
+                            <p><strong>FATHER NAME:</strong> ${patient.fname}</p>
+                            <p><strong>AGE:</strong> ${patient.age}</p>
+                            <p><strong>GENDER:</strong> ${patient.gender}</p>
+                            <p><strong>ADMISSION DATE:</strong> ${patient.admit}</p>
+                            <p><strong>STATUS:</strong> ${patient.status || 'N/A'}</p>
+                            <p><strong>REFERRED BY:</strong> ${patient.referred}</p>
+                            <p><strong>INTERVENTION:</strong> ${patient.intervention}</p>
+                            <p><strong>CLINICIAN:</strong> ${patient.clinician}</p>
+                            <p><strong>DISORDER:</strong> ${patient.disorder}</p>
+                            <p><strong>CONTACT:</strong> ${patient.contact}</p>
+                            <p><strong>ADDRESS:</strong> ${patient.address}</p>
+                        </div>`;
+
+            // Add Attendance Records section
+            html += `<h3>ATTENDANCE RECORDS:</h3>
+                     <ul class="print-progress-reports">`; // Reusing print-progress-reports style for consistency
+            if (patient.attendance && patient.attendance.length > 0) {
+                const sortedAttendance = patient.attendance.sort((a, b) => new Date(a.date) - new Date(b.date));
+                sortedAttendance.forEach(record => {
+                    html += `<li><strong>DATE:</strong> ${record.date} &nbsp;-&nbsp; <strong>SESSIONS:</strong> ${record.count}</li>`;
+                });
+            } else {
+                html += '<li>NO ATTENDANCE RECORDS AVAILABLE.</li>';
+            }
+            html += `</ul>`;
+
+            // Add Progress Reports section
+            html += `<h3>PROGRESS REPORTS:</h3>
+                     <ul class="print-progress-reports">`;
+            if (patient.progress && patient.progress.length > 0) {
+                const sortedProgress = patient.progress.sort((a, b) => new Date(a.date) - new Date(b.date));
+                sortedProgress.forEach(report => {
+                    html += `<li><strong>DATE:</strong> ${report.date}<br><strong>DETAILS:</strong> ${report.details}</li>`;
+                });
+            } else {
+                html += '<li>NO PROGRESS REPORTS AVAILABLE.</li>';
+            }
+            html += `</ul>`;
+
+
+            printDetailsContentDiv.innerHTML = html;
+            printButton.style.display = 'inline-block'; // Show print button
+        }
+
+        // Print Patient Details
+        function printPatientDetails() {
+            const contentToPrint = document.getElementById('printDetailsContent').innerHTML;
+            const originalBody = document.body.innerHTML;
+            document.body.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h1>CHAMPS (CMH SIALKOT) - PATIENT DETAILS</h1>
+                </div>
+                ${contentToPrint}
+            `;
+            window.print();
+            document.body.innerHTML = originalBody;
+            // Restore event listeners for tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.onclick = (e) => openTab(e, button.id.replace('TabButton', ''));
+            });
+            // Ensure the print form tab is active again after print
+            openTab({currentTarget: document.querySelector('.tab-button:nth-child(5)')}, 'printForm');
+        }
+
+
+        // --- Backup Management Functions ---
+
+        // Update Dashboard Statistics
+        function updateStatistics() {
+            const total = Object.keys(patients).length;
+            let activeCount = 0;
+            let inactiveCount = 0;
+
+            for (const pid in patients) {
+                if (patients[pid].status === 'Active') {
+                    activeCount++;
+                } else if (patients[pid].status === 'Inactive') {
+                    inactiveCount++;
+                }
+            }
+
+            document.getElementById('totalPatients').innerText = total;
+            document.getElementById('activePatientsCount').innerText = activeCount;
+            document.getElementById('inactivePatientsCount').innerText = inactiveCount;
+
+            // Update local storage status indicator
+            const localStorageStatusDiv = document.getElementById('localStorageStatus');
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                document.getElementById('localSyncIndicator').classList.add('connected');
+                document.getElementById('localSyncStatus').innerText = 'LOCAL STORAGE IS CONNECTED';
+                localStorageStatusDiv.classList.remove('status-warning', 'status-danger');
+                localStorageStatusDiv.classList.add('status-success');
+                localStorageStatusDiv.style.display = 'block';
+                localStorageStatusDiv.innerText = 'LOCAL STORAGE IS WORKING PROPERLY';
+            } catch (e) {
+                document.getElementById('localSyncIndicator').classList.remove('connected');
+                document.getElementById('localSyncStatus').innerText = 'LOCAL STORAGE ERROR!';
+                localStorageStatusDiv.classList.remove('status-success', 'status-danger');
+                localStorageStatusDiv.classList.add('status-warning');
+                localStorageStatusDiv.style.display = 'block';
+                localStorageStatusDiv.innerText = 'WARNING: LOCAL STORAGE MAY BE DISABLED OR FULL. AUTO BACKUP MIGHT NOT WORK.';
+                console.error("Local Storage Error:", e);
+            }
+
+            // Update auto backup status indicator
+            const autoBackupBtn = document.getElementById('autoBackupBtn');
+            const autoSyncIndicator = document.getElementById('autoSyncIndicator');
+            const autoSyncStatus = document.getElementById('autoSyncStatus');
+            if (autoBackupEnabled) {
+                autoBackupBtn.innerText = 'DISABLE AUTO BACKUP';
+                autoBackupBtn.classList.remove('btn-primary');
+                autoBackupBtn.classList.add('btn-danger');
+                autoSyncIndicator.classList.add('connected');
+                autoSyncStatus.innerText = 'AUTO BACKUP IS ENABLED';
+            } else {
+                autoBackupBtn.innerText = 'ENABLE AUTO BACKUP';
+                autoBackupBtn.classList.remove('btn-danger');
+                autoBackupBtn.classList.add('btn-primary');
+                autoSyncIndicator.classList.remove('connected');
+                autoSyncStatus.innerText = 'AUTO BACKUP IS DISABLED';
+            }
+        }
+
+
+        // Save data to Local Storage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('champsPatients', JSON.stringify(patients));
+                alert("DATA SAVED TO LOCAL STORAGE!");
+                updateStatistics(); // Update status indicators
+            } catch (e) {
+                alert("ERROR: COULD NOT SAVE DATA TO LOCAL STORAGE. IT MIGHT BE FULL OR DISABLED.");
+                console.error("Local Storage Save Error:", e);
+                const localStorageStatusDiv = document.getElementById('localStorageStatus');
+                localStorageStatusDiv.classList.remove('status-warning', 'status-danger');
+                localStorageStatusDiv.classList.add('status-danger');
+                localStorageStatusDiv.style.display = 'block';
+                localStorageStatusDiv.innerText = 'ERROR: DATA COULD NOT BE SAVED TO LOCAL STORAGE. PLEASE CHECK BROWSER SETTINGS.';
+            }
+        }
+
+        // Load data from Local Storage
+        function loadFromLocalStorage() {
+            try {
+                const storedData = localStorage.getItem('champsPatients');
+                if (storedData) {
+                    patients = JSON.parse(storedData);
+                    // Ensure all patients have a 'status' field when loaded (for older data)
+                    for (const pid in patients) {
+                        if (patients[pid].status === undefined) {
+                            patients[pid].status = 'Active'; // Default older patients to Active
+                        }
+                    }
+                    alert("DATA LOADED FROM LOCAL STORAGE!");
+                    generateNominalRoll(); // Refresh nominal roll with loaded data
+                    updateStatistics();
+                    initializeNextPatientId(); // Recalculate next PID based on loaded data
+                } else {
+                    patients = {}; // Initialize empty if no data found
+                    generateNominalRoll(); // Ensure nominal roll is empty
+                    alert("NO SAVED DATA FOUND IN LOCAL STORAGE.");
+                }
+            } catch (e) {
+                alert("ERROR: COULD NOT LOAD DATA FROM LOCAL STORAGE. DATA MIGHT BE CORRUPTED OR STORAGE DISABLED.");
+                console.error("Local Storage Load Error:", e);
+                patients = {}; // Reset patients to empty on error
+                const localStorageStatusDiv = document.getElementById('localStorageStatus');
+                localStorageStatusDiv.classList.remove('status-success', 'status-warning');
+                localStorageStatusDiv.classList.add('status-danger');
+                localStorageStatusDiv.style.display = 'block';
+                localStorageStatusDiv.innerText = 'ERROR: DATA COULD NOT BE LOADED FROM LOCAL STORAGE. DATA MAY BE CORRUPTED.';
+            }
+
+            // Load auto backup setting
+            const storedAutoBackup = localStorage.getItem('champsAutoBackupEnabled');
+            if (storedAutoBackup !== null) {
+                autoBackupEnabled = JSON.parse(storedAutoBackup);
+                document.getElementById('autoLocal').checked = localStorage.getItem('champsAutoLocalChecked') === 'true';
+            }
+            updateStatistics();
+        }
+
+        // Clear Local Storage
+        function clearLocalStorage() {
+            if (confirm("ARE YOU SURE YOU WANT TO CLEAR ALL DATA FROM LOCAL STORAGE? THIS CANNOT BE UNDONE!")) {
+                try {
+                    localStorage.removeItem('champsPatients');
+                    localStorage.removeItem('champsAutoBackupEnabled');
+                    localStorage.removeItem('champsAutoLocalChecked');
+                    patients = {}; // Clear in-memory data
+                    alert("ALL DATA CLEARED FROM LOCAL STORAGE!");
+                    generateNominalRoll();
+                    updateStatistics();
+                    clearForm(); // Also clear the form
+                    autoBackupEnabled = false; // Reset auto backup status
+                    document.getElementById('autoLocal').checked = true; // Reset checkbox
+                } catch (e) {
+                    alert("ERROR: COULD NOT CLEAR LOCAL STORAGE.");
+                    console.error("Local Storage Clear Error:", e);
+                }
+            }
+        }
+
+        // Toggle Auto Backup
+        function toggleAutoBackup() {
+            autoBackupEnabled = !autoBackupEnabled;
+            localStorage.setItem('champsAutoBackupEnabled', JSON.stringify(autoBackupEnabled));
+            updateStatistics();
+            alert(`AUTO BACKUP IS NOW ${autoBackupEnabled ? 'ENABLED' : 'DISABLED'}.`);
+        }
+
+        // Handle data changes for auto-backup
+        function handleDataChange() {
+            if (autoBackupEnabled && document.getElementById('autoLocal').checked) {
+                saveToLocalStorage();
+            }
+        }
+
+        // Save Auto Local Checkbox state
+        document.getElementById('autoLocal').addEventListener('change', () => {
+            localStorage.setItem('champsAutoLocalChecked', document.getElementById('autoLocal').checked);
+        });
+
+        // Download JSON Backup
+        function downloadJSONBackup() {
+            const dataStr = JSON.stringify(patients, null, 4); // Pretty print JSON
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `champs_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert("JSON BACKUP DOWNLOADED!");
+        }
+
+        // Export All Patients to CSV
+        function exportAllPatientsToCSV() {
+            if (Object.keys(patients).length === 0) {
+                alert("NO PATIENT DATA TO EXPORT.");
+                return;
+            }
+
+            let csv = "ID,NAME,RANK,FATHER NAME,AGE,GENDER,REFERRED BY,INTERVENTION,CLINICIAN,DISORDER,ADMISSION DATE,ADDRESS,CONTACT NUMBER,STATUS\n"; // Added STATUS header
+
+            for (const pid in patients) {
+                const p = patients[pid];
+                const row = [
+                    `"${p.pid}"`,
+                    `"${p.pname}"`,
+                    `"${p.rank}"`,
+                    `"${p.fname}"`,
+                    `"${p.age}"`,
+                    `"${p.gender}"`,
+                    `"${p.referred}"`,
+                    `"${p.intervention}"`,
+                    `"${p.clinician}"`,
+                    `"${p.disorder ? p.disorder.replace(/"/g, '""') : ''}"`, // Handle quotes in textarea
+                    `"${p.admit}"`,
+                    `"${p.address ? p.address.replace(/"/g, '""') : ''}"`, // Handle quotes in textarea
+                    `"${p.contact}"`,
+                    `"${p.status || 'N/A'}"` // Added STATUS
+                ].join(',');
+                csv += row + "\n";
+            }
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `champs_patients_all_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            alert("ALL PATIENT DATA EXPORTED TO CSV!");
+        }
+
+        // Restore from JSON File
+        function restoreFromFile() {
+            const fileInput = document.getElementById('restoreFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("PLEASE SELECT A JSON BACKUP FILE TO RESTORE.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const restoredData = JSON.parse(e.target.result);
+                    if (confirm("RESTORING FROM THIS FILE WILL OVERWRITE ALL CURRENT PATIENT DATA. ARE YOU SURE YOU WANT TO PROCEED?")) {
+                        patients = restoredData;
+                        // Ensure all patients have a 'status' field when loaded from file
+                        for (const pid in patients) {
+                            if (patients[pid].status === undefined) {
+                                patients[pid].status = 'Active'; // Default older patients to Active
+                            }
+                        }
+                        alert("DATA RESTORED SUCCESSFULLY FROM FILE!");
+                        generateNominalRoll();
+                        updateStatistics();
+                        saveToLocalStorage(); // Save restored data to local storage
+                        initializeNextPatientId();
+                    }
+                } catch (error) {
+                    alert("ERROR PARSING JSON FILE. PLEASE ENSURE IT'S A VALID CHAMPS BACKUP FILE.");
+                    console.error("FILE RESTORE ERROR:", error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+    </script>
+</body>
+</html>
